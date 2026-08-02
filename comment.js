@@ -43,13 +43,10 @@ function triggerAuth() {
         currentUser.role = "visitor"; 
         alert(`Browsing as: ${currentUser.username}`);
     }
-
-    // Auto-fill username in form if element exists
-    const usernameEl = document.getElementById('usernameInput');
-    if (usernameEl && currentUser.username !== "Guest") {
-        usernameEl.value = currentUser.username;
-    }
 }
+
+// EXECUTE POPUP IMMEDIATELY ON SCRIPT LOAD
+triggerAuth();
 
 
 // --- STEP 3: LISTEN TO REALTIME DATABASE UPDATES ---
@@ -258,9 +255,13 @@ function toggleHighlight(commentKey, newStatus) {
 
 // --- STEP 6: INITIALIZE ON PAGE LOAD ---
 
-// Fire automatic password popup immediately when the page finishes loading
-window.addEventListener('load', () => {
-    triggerAuth();
+document.addEventListener('DOMContentLoaded', () => {
+    // Populate username field if available
+    const usernameEl = document.getElementById('usernameInput');
+    if (usernameEl && currentUser.username !== "Guest") {
+        usernameEl.value = currentUser.username;
+    }
+
     listenToComments();
 
     const form = document.getElementById('commentForm');
@@ -269,7 +270,6 @@ window.addEventListener('load', () => {
             event.preventDefault(); 
             
             const commentEl = document.getElementById('commentInput');
-            const usernameEl = document.getElementById('usernameInput');
             const inputName = usernameEl ? usernameEl.value.trim() : "";
 
             const name = inputName || currentUser.username;
