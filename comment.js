@@ -26,7 +26,7 @@ function triggerAuth() {
     let passwordPrompt = prompt("Enter Password (or leave blank to browse as Guest):");
 
     if (passwordPrompt === "shikikarajibunnies") { 
-        alert("Welcome Back, Developer!");
+        alert("Welcome Back, Creator!");
         currentUser.username = "The Developer";
         currentUser.role = "developer";
     } else {
@@ -258,10 +258,9 @@ function toggleHighlight(commentKey, newStatus) {
 
 // --- STEP 6: INITIALIZE ON PAGE LOAD ---
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Run password popup safely after page loads
-    setTimeout(triggerAuth, 200);
-
+// Fire automatic password popup immediately when the page finishes loading
+window.addEventListener('load', () => {
+    triggerAuth();
     listenToComments();
 
     const form = document.getElementById('commentForm');
